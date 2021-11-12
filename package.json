@@ -1,0 +1,37 @@
+{
+  "name": "myyoutube",
+  "version": "1.0.0",
+  "description": "cloning youtube myself",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec npx babel-node src/init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sungminlee0826/myyoutube.git"
+  },
+  "author": "Brian Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sungminlee0826/myyoutube/issues"
+  },
+  "homepage": "https://github.com/sungminlee0826/myyoutube#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.0.12",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.6",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@types/node-fetch": "^3.0.3",
+    "nodemon": "^2.0.14"
+  }
+}
