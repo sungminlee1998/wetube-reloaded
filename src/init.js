@@ -1,4 +1,5 @@
 import 'dotenv/config'
+//.env file 읽고 데이타 가져올 수 있게 해줌 
 import "./db"
 import app from "./server"
 

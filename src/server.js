@@ -7,8 +7,6 @@ import videoRouter from './routers/videoRouter';
 import userRouter from './routers/userRouter';
 import { localsMiddleware } from "./middlewares";
 
-console.log(process.cwd());
-
 const app = express();
 const logger = morgan('dev')
 
@@ -19,16 +17,19 @@ app.use(express.urlencoded({extended: true}));
 app.use(
     session({
         secret: process.env.COOKIE_SECRET,
+        //This is the secret used to sign the session ID cookie
         resave: false,
+        //Forces the session to be saved back to the session store, even if the session was never modified during the request.
         saveUninitialized: false,
-        cookie: {
-            maxAge: 5000,
-        },
+        //Forces a session that is "uninitialized" to be saved to the store
+        //false is useful for implementing login sessions, reducing server storage usage, or complying with laws that require permission before setting a cookie
         //위 두개 false함으로써 log in 한 user 한테만 cookie를 줌 
         store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
+        //The session store instance, defaults to a new MemoryStore instance.
         //session을  mongodb에 저장 
     })
 )
+// 해당 session middleware 는 내 website visitor들을 기억하도록 설정한것
 
 app.use(localsMiddleware)
 app.use('/', rootRouter);

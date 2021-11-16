@@ -38,7 +38,7 @@ export const postJoin = async(req, res) => {
 export const getLogin = (req, res) => res.render('login',{pageTitle: "Login"} )
 export const postLogin = async (req,res) => {
     const { userName, password } = req.body;
-    const user = await User.findOne({userName, socialLogin: false})
+    const user = await User.findOne({userName, socialOnly: false})
     const pageTitle = "Login"
     if(!user){
         return res.status(400).render('login', {
@@ -155,8 +155,9 @@ export const postEdit = async (req, res) => {
         user: { _id }
     }, 
     body: { name, email, userName, location },
-   } = req
-   const existingEmail = await User.findOne({ email })
+} = req
+    console.log(req.file)
+    const existingEmail = await User.findOne({ email })
    const existingUsername = await User.findOne({ userName })
    // To check is username or email exist
    //const exists = await User.exists( {$or: [{ userName }, { email }] })
@@ -181,15 +182,34 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
     if(req.session.socialOnly === true){
-        return res.redirect('/')
+        res.redirect('/')
     }
-    return res.render('users/change-password',{pageTitle: 'Change Password'})
+    return res.render('users/change-password',{pagetTitle: "Change Password"})
 }
-export const postChangePassword = async(req, res) => {
-    const { oldPassword, newPassword, newPasswordConfirmation } = req.body;
-    console.log(req.session.user)
-    console.log( oldPassword, newPassword, newPasswordConfirmation )
-    res.redirect('/')
-}
+
+export const postChangePassword = async (req, res) => {
+    const {oldPassword, newPassword, newPasswordConfirmation} = req.body;
+    const {_id, password} = req.session.user
+
+    if(newPassword !==newPasswordConfirmation){
+        //status 400 안보내면 browser은 내가 성공한줄 함 
+        return res.status(400).render('users/change-password', 
+        {pageTitle: 'Change Password', errorMessage : "The password confirmation does not match"})
+    }
+
+    const ok = await bcrypt.compare(oldPassword,password)
+    if(!ok){
+        return res.status(400).render('users/change-password', 
+        {pageTitle: 'Change Password', errorMessage : "The current password is incorrect"})
+    }
+    // if the old password is correct and the confirmation is also correct, then 
+
+    const user = await User.findById(_id);
+    await user.save()
+    // ~~.save()를 하거나 or user를 create 할때 pre middleware 작용 => hashing 
+    req.session.user.password = user.password
+    //update session
+    return res.redirect('/users/logout')
+    }
 
 export const see = (req, res) => res.send('See User')
