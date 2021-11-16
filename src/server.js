@@ -5,7 +5,7 @@ import MongoStore from 'connect-mongo'
 import rootRouter from './routers/rootRouter';
 import videoRouter from './routers/videoRouter';
 import userRouter from './routers/userRouter';
-import { localsMiddleware } from "./middlewares";
+import { localsMiddleware, uploadFiles } from "./middlewares";
 
 const app = express();
 const logger = morgan('dev')
@@ -32,6 +32,8 @@ app.use(
 // 해당 session middleware 는 내 website visitor들을 기억하도록 설정한것
 
 app.use(localsMiddleware)
+app.use('/uploads', express.static("uploads"))
+//express.static은 the wat we expose a folder
 app.use('/', rootRouter);
 app.use('/videos', videoRouter);
 app.use('/users', userRouter);
