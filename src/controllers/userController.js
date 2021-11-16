@@ -152,12 +152,13 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
    const { 
     session: { 
-        user: { _id }
+        user: { _id, avatarUrl }
     }, 
     body: { name, email, userName, location },
+    file
 } = req
-    console.log(req.file)
-    const existingEmail = await User.findOne({ email })
+    
+  const existingEmail = await User.findOne({ email })
    const existingUsername = await User.findOne({ userName })
    // To check is username or email exist
    //const exists = await User.exists( {$or: [{ userName }, { email }] })
@@ -169,7 +170,9 @@ export const postEdit = async (req, res) => {
    
    //db에 업데이트는 되지만 not reflected on the session. 그래서
    const updatedUser = await User.findByIdAndUpdate(_id,{
-       name,
+       avatarUrl: file ?  file.path : avartarUrl,
+       //if file was uploaded, than have the path of that file, otherwise use the old avatarUrl.
+        name,
        email,
        userName,
        location,
@@ -212,4 +215,12 @@ export const postChangePassword = async (req, res) => {
     return res.redirect('/users/logout')
     }
 
-export const see = (req, res) => res.send('See User')
+export const see = async(req, res) => {
+    //profile페이지는 공개되는 페이지이기 때문에  session 이용해서 받지 않음
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if(!user){
+        return res.status(404).render('404',{pageTitle: "User not found"})
+    }
+    return res.render('users/profile', {pageTitle: `${user.name} profile`, user})
+}
