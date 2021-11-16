@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     userName: {type: String, required: true, unique: true },
     socialOnly: {type: Boolean, default: false},
     //github을 이용해서 account 만들었나? 를 위해socialOnly
-    avatarUrl: String,
+    avatarUrl: {type: String, required: true},
     password: {type: String, required: false},
     name: { type: String, required: true},
     location: {type: String}
