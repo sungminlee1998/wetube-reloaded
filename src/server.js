@@ -33,7 +33,7 @@ app.use(
 
 app.use(localsMiddleware)
 app.use('/uploads', express.static("uploads"))
-//express.static은 the wat we expose a folder
+//express.static은 the way we expose a folder
 app.use('/', rootRouter);
 app.use('/videos', videoRouter);
 app.use('/users', userRouter);
