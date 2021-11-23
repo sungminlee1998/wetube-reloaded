@@ -12,8 +12,7 @@ const userSchema = new mongoose.Schema({
     location: {type: String},
     videos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Video'  }]
     //An user can have many videos in an array
-    }
-)
+})
 
 userSchema.pre('save', async function(){
     this.password = await bcrypt.hash(this.password, 5);

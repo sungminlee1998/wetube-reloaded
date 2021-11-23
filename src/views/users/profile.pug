@@ -2,7 +2,7 @@ extends ../base
 include ../mixins/video
 
 block content 
-        each potato in user.videos
-            +video(potato)
-        else   
-            li Sorry Nothing found 
+    each potato in user.videos
+        +video(potato)
+    else   
+        li Sorry Nothing found   
