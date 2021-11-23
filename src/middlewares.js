@@ -26,7 +26,14 @@ export const publicOnlyMiddleware = (req, res, next) => {
     }
 }
 
-export const avatarUpload = multer({dest: "uploads/avatars", limits: { fileSize: 3000}})
-//middleware that puts the uploaded files on the upload.
+export const avatarUpload = multer({
+    dest: "uploads/avatars", 
+    limits: { fileSize: 300000}
+})
+//middleware that puts the uploaded files on the upload.\
+//dest  지정하면 알아서 폴더가 생김 
 
-export const videoUpload = multer({dest: "uploads/videos", limits: { fileSize: 10000000}})
+export const videoUpload = multer({
+    dest: "uploads/videos", 
+    limits: { fileSize: 10000000}
+})
