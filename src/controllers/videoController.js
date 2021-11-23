@@ -1,5 +1,6 @@
 import Video from "../models/Video";
 import User from "../models/User";
+import { videoUpload } from "../middlewares";
 
 export const home = async(req, res) => {    
     const videos = await Video.find({}).sort({createdAt: 'desc'});
@@ -9,8 +10,11 @@ export const home = async(req, res) => {
 export const watch = async (req, res) => {
     const { id } = req.params;
     const video = await Video.findById(id)
-    console.log(video)
     const owner = await User.findById(video.owner)
+    console.log(owner)
+    //populate가 Video의 owner을 찾고 ref가 user 이라 user의 모든 정보를 가져옴 
+    //이해 안되면 그냥 console.log(video) 해보면 됨
+    //console.log(video) 하면 postUpload 에서 부여한 owner 가 있음. req.session.user._id를 부여했었음
     if(!video){
         return res.render("404", {pageTitle: "Video Not Found"})
     } else{
@@ -42,20 +46,21 @@ export const postEdit = async (req, res) => {
 }
  
 export const getUpload = (req, res) => {
-    console.log(req.session)
     return res.render("upload", { pageTitle: "Upload Video"})
 }
 
 export const postUpload = async (req, res) => {
     const {
         user: {_id}
-    } =req.session
-    const { title, description, hashtags }= req.body;
+    } = req.session
+    const { title, description, hashtags } = req.body;
     const {path: fileUrl} = req.file
+    //get req.file.path and change the name to fileUrl
+    //multer gives us req.file
     //req.file.path가 존재하는것이기 때문에 받아서 해당 파일을 fileUrl로 return 해줌 
     //So that I can kind of shortcut as below
     try{
-        await Video.create({
+        const newVideo = await Video.create({
             title,
             description,
             fileUrl,
@@ -63,6 +68,10 @@ export const postUpload = async (req, res) => {
             //to distinguish the ownwer of the video for enabling edit, delete video feature for the user
             hashtags: Video.formatHashtags(hashtags)
         })
+        const user = await User.findById(_id);
+        user.videos.push(newVideo._id)
+        //user의 비디오 목록에 새로 생성되는 비디오 _id 추가 
+        user.save();
         return res.redirect('/')           
     }catch(error){
         console.log(error)
