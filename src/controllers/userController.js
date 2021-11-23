@@ -1,4 +1,5 @@
 import User from '../models/User';
+import Videos from '../models/Video'
 import fetch from 'node-fetch';
 import bcrypt from 'bcrypt';
 
@@ -29,6 +30,7 @@ export const postJoin = async(req, res) => {
     })
         return res.redirect('/login')
     } catch(error){
+        console.log(error)
         return res.status(400).render("join", {  
             pageTitle:'Upload Video',
             errorMessage: error._message,
@@ -69,7 +71,6 @@ export const startGithubLogin = (req, res) => {
     const finalUrl = `${baseUrl}?${params}`
     return res.redirect(finalUrl)
 }
-
 export const finishGithubLogin = async (req, res) => {
     const baseUrl = 'https://github.com/login/oauth/access_token'
     const config = {
@@ -143,12 +144,10 @@ export const finishGithubLogin = async (req, res) => {
 export const logout = (req, res) => {
     req.session.destroy();
     return res.redirect('/');
-};
-
+}
 export const getEdit = (req, res) => {
     return res.render('edit-profile', {pageTitle: 'Edit Profile'})
 }
-
 export const postEdit = async (req, res) => {
    const { 
     session: { 
@@ -157,7 +156,6 @@ export const postEdit = async (req, res) => {
     body: { name, email, userName, location },
     file
 } = req
-    
   const existingEmail = await User.findOne({ email })
    const existingUsername = await User.findOne({ userName })
    // To check is username or email exist
@@ -167,10 +165,9 @@ export const postEdit = async (req, res) => {
     console.log('UserName of Email has been already taken')    
     return res.render('edit-profile', {pageTitle: 'Edit', errorMessage: 'UserName of Email has been already taken'})
    }
-   
    //db에 업데이트는 되지만 not reflected on the session. 그래서
    const updatedUser = await User.findByIdAndUpdate(_id,{
-       avatarUrl: file ?  file.path : avartarUrl,
+       avatarUrl: file ? file.path : avatarUrl,
        //if file was uploaded, than have the path of that file, otherwise use the old avatarUrl.
         name,
        email,
@@ -182,14 +179,12 @@ export const postEdit = async (req, res) => {
     req.session.user = updatedUser
     return res.redirect('/')
    }
-
 export const getChangePassword = (req, res) => {
     if(req.session.socialOnly === true){
         res.redirect('/')
     }
     return res.render('users/change-password',{pagetTitle: "Change Password"})
 }
-
 export const postChangePassword = async (req, res) => {
     const {oldPassword, newPassword, newPasswordConfirmation} = req.body;
     const {_id, password} = req.session.user
@@ -218,9 +213,11 @@ export const postChangePassword = async (req, res) => {
 export const see = async(req, res) => {
     //profile페이지는 공개되는 페이지이기 때문에  session 이용해서 받지 않음
     const { id } = req.params;
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("videos");
+    console.log(user)
     if(!user){
         return res.status(404).render('404',{pageTitle: "User not found"})
     }
-    return res.render('users/profile', {pageTitle: `${user.name} profile`, user})
+    return res.render('users/profile', {pageTitle: `${user.name}님의 profile`, user})   
+    //populate videos 를 했기 때문에 user variable을 보내서 user.video 로 pug 에서 이용할 수 있음 
 }
