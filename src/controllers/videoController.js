@@ -9,10 +9,19 @@ export const home = async(req, res) => {
 
 export const watch = async (req, res) => {
     const { id } = req.params;
+<<<<<<< HEAD
     const video = await Video.findById(id).populate('owner')
     //populate가 Video의 owner을 찾고 ref가 user 이라 user의 모든 정보를 가져옴 
     //console.log(video) 하면 postUpload 에서 부여한 owner가 있음. req.session.user._id를 부여했었음
     //populate 하면 한번에 owner의 property를 전부 볼 수 있어서 특정 property 전달할때도유리
+=======
+    const video = await Video.findById(id)
+    const owner = await User.findById(video.owner)
+    console.log(owner)
+    //populate가 Video의 owner을 찾고 ref가 user 이라 user의 모든 정보를 가져옴 
+    //이해 안되면 그냥 console.log(video) 해보면 됨
+    //console.log(video) 하면 postUpload 에서 부여한 owner 가 있음. req.session.user._id를 부여했었음
+>>>>>>> b75b1d29ec2d898ca3d9d3d8e80989e68692cf81
     if(!video){
         return res.render("404", {pageTitle: "Video Not Found"})
     } else{
@@ -77,7 +86,11 @@ export const postUpload = async (req, res) => {
         })
         const user = await User.findById(_id);
         user.videos.push(newVideo._id)
+<<<<<<< HEAD
         //user의 비디오 목록에 새로 생성되는 비디오 _id 추가 \
+=======
+        //user의 비디오 목록에 새로 생성되는 비디오 _id 추가 
+>>>>>>> b75b1d29ec2d898ca3d9d3d8e80989e68692cf81
         user.save();
         return res.redirect('/')           
     }catch(error){

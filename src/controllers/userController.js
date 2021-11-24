@@ -1,5 +1,9 @@
 import User from '../models/User';
+<<<<<<< HEAD
 import Video from '../models/Video';
+=======
+import Videos from '../models/Video'
+>>>>>>> b75b1d29ec2d898ca3d9d3d8e80989e68692cf81
 import fetch from 'node-fetch';
 import bcrypt from 'bcrypt';
 
@@ -214,11 +218,20 @@ export const postChangePassword = async (req, res) => {
 export const see = async(req, res) => {
     //profile페이지는 공개되는 페이지이기 때문에  session 이용해서 받지 않음
     const { id } = req.params;
+<<<<<<< HEAD
     const user = await User.findById(id).populate('videos')
     if(!user){
         return res.status(404).render('404',{pageTitle: "User not found"})
     }
     return res.render('users/profile', {
         pageTitle: `${user.name}님의 profile`, user})   
+=======
+    const user = await User.findById(id).populate("videos");
+    console.log(user)
+    if(!user){
+        return res.status(404).render('404',{pageTitle: "User not found"})
+    }
+    return res.render('users/profile', {pageTitle: `${user.name}님의 profile`, user})   
+>>>>>>> b75b1d29ec2d898ca3d9d3d8e80989e68692cf81
     //populate videos 를 했기 때문에 user variable을 보내서 user.video 로 pug 에서 이용할 수 있음 
 }

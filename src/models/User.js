@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
     location: {type: String},
     videos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Video'  }]
     //An user can have many videos in an array
+<<<<<<< HEAD
 })
+=======
+    }
+)
+>>>>>>> b75b1d29ec2d898ca3d9d3d8e80989e68692cf81
 
 userSchema.pre('save', async function(){
     if(this.isModified('password')){

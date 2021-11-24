@@ -6,8 +6,12 @@ block content
         p=video.description
         small=video.createdAt 
     div 
+<<<<<<< HEAD
         small Uploaded by  
             a(href=`/users/${video.owner._id}`)=video.owner.name
+=======
+        small Uploaded by #{owner.name}
+>>>>>>> b75b1d29ec2d898ca3d9d3d8e80989e68692cf81
     if String(video.owner._id) === String(loggedInUser._id)
         a(href=`${video.id}/edit`) Edit Video &rarr; 
         br
