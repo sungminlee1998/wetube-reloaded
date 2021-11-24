@@ -21,26 +21,35 @@ export const watch = async (req, res) => {
 }
 
 export const getEdit = async (req, res) => {
+    const { id } = req.params;
+    const { user: {_id}} = req.session
     const video = await Video.findById(id)
     if(!video){
         return res.render("404", {pageTitle: "Video Not Found"})
-    } else{
-    }}
+    } 
+     if(String(video.owner) !== String(_id)){
+        return res.status(403).redirect('/');
+    }
+        return res.render('edit', {pageTitle: `Edit: ${video.title}`, video})
+    }
 
 export const postEdit = async (req, res) => {
     const { id } = req.params;
+    const { user: {_id}} = req.session
     const {newTitle, description, hashtags} = req.body
-    const video = await Video.exists({_id: id})
+    const video = await Video.findById(id)
     if(!video){
         return res.render("404", {pageTitle: "Video Not Found"})
-    } else{ 
-        await Video.findByIdAndUpdate(id, {
-            title: newTitle,
-            description,
-            hashtags: Video.formatHashtags(hashtags)
-        });
-        return res.redirect(`/videos/${id}`)
+    } 
+    if(String(video.owner) !== String(_id)){
+        return res.status(403).redirect('/');
     }
+    await Video.findByIdAndUpdate(id, {
+        title: newTitle,
+        description,
+        hashtags: Video.formatHashtags(hashtags)
+    });
+        return res.redirect(`/videos/${id}`)
 }
  
 export const getUpload = (req, res) => {
@@ -68,7 +77,7 @@ export const postUpload = async (req, res) => {
         })
         const user = await User.findById(_id);
         user.videos.push(newVideo._id)
-        //user의 비디오 목록에 새로 생성되는 비디오 _id 추가 
+        //user의 비디오 목록에 새로 생성되는 비디오 _id 추가 \
         user.save();
         return res.redirect('/')           
     }catch(error){
@@ -76,8 +85,17 @@ export const postUpload = async (req, res) => {
     }
 }
 export const deleteVideo = async(req, res) => {
+    const { user: {_id}} = req.session
     const { id } = req.params
     await Video.findByIdAndDelete(id)
+    const video = await Video.findById(id);
+    if(!video){
+        return res.render("404", {pageTitle: "Video Not Found"})
+
+    }
+    if(String(video.owner) !== String(_id)){
+        return res.status(403).redirect('/');
+    }
     return res.redirect('/')
 }
 export const search = async(req, res) =>{
