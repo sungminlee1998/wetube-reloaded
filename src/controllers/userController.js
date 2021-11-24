@@ -203,6 +203,7 @@ export const postChangePassword = async (req, res) => {
     // if the old password is correct and the confirmation is also correct, then 
 
     const user = await User.findById(_id);
+    user.password = newPassword
     await user.save()
     // ~~.save()를 하거나 or user를 create 할때 pre middleware 작용 => hashing 
     req.session.user.password = user.password

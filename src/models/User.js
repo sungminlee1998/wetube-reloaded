@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function(){
-    this.password = await bcrypt.hash(this.password, 5);
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password, 5);
+    }
+    //only if password is modified, hash the password
+    //postUpload에서 user.videos.push(newVideo._id) 때문에 save가 일어나 hashing이 또 일어나는것을 방지
 })
 
 const User = mongoose.model('User', userSchema)
