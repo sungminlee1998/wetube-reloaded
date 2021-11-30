@@ -1,10 +1,7 @@
 extends base.pug
 
 block content 
-    img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
-    if errorMessage 
-        span=errorMessage 
-    form(method="POST", enctype="multipart/form-data") 
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="avatar") AVATAR 
         input(type="file", id="avatar", name="avatar", accept="image/*")
         input(placeholder="name", name="name", type="text", required, value=loggedInUser.name)
@@ -14,5 +11,5 @@ block content
         input(type="submit", value="Update Profile")
         hr
         if !loggedInUser.socialOnly
-            hr
-            a(href="change-password") Change Password &rarr;
+            div.edit-profile__password
+                a(href="change-password") Change Password &rarr;
