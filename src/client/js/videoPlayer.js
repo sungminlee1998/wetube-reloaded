@@ -24,6 +24,7 @@ let insideMoveTimeout = null;
 let volumeValue = 0.5
 video.volumn = volumeValue
 
+console.log(videoContainer.dataset)
 const handlePlayClick = (e) => {
     if(video.paused){
         video.play()
@@ -113,11 +114,17 @@ const handleMouseLeave = () => {
     mouseLeaveTimeout = setTimeout(()=> { hideControls },3000)
 }
 
-
 const handleSpacebar = (e) => {
     if(e.keyCode == 32){
         handlePlayClick()
     }
+}
+
+const handleEnded = (e) => {
+    const { id } = videoContainer.dataset
+    fetch(`/api/videos/${id}/view`, {
+        method: "POST"
+    })
 }
 
 
@@ -128,6 +135,7 @@ muteBtnIcon.addEventListener('click', handleMute);
 volumeRange.addEventListener('input', handleVolumeChange);
 video.addEventListener('loadedmetadata', handleLoadedMetadata);
 video.addEventListener('timeupdate', handleTimeUpdate);
+video.addEventListener('ended', handleEnded)
 timeline.addEventListener('input', handleTimelineChange);
 fullScreenBtn.addEventListener('click', handleFullScreen);
 videoContainer.addEventListener('mousemove', handleMouseMove)

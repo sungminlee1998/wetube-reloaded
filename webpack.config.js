@@ -3,17 +3,18 @@ const path = require('path');
 
 module.exports = {
 entry: {
-  main:  './src/client/js/main.js',
-  videoPlayer: './src/client/js/videoPlayer.js'
+  main: './src/client/js/main.js',
+  videoPlayer:'./src/client/js/videoPlayer.js',
+  recorder:'./src/client/js/recorder.js'
 },
   mode:'development',
-watch: true,
+  watch: true,
 //variable 바꾸면 알아서 적용됨
-plugins: [
-  new MiniCssExtractPlugin({
-    filename: "css/styles.css",
-    //make a css folder to be seperated from the js folder
-  })],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/styles.css",
+      //make a css folder to be seperated from the js folder
+    })],
   output: {
     filename: "js/[name].js",
     path: path.resolve(__dirname, "assets"),
