@@ -61,7 +61,8 @@ export const postUpload = async (req, res) => {
         user: {_id}
     } = req.session
     const { title, description, hashtags } = req.body;
-    const {path: fileUrl} = req.file
+    const {video, thumb} = req.files 
+
     //get req.file.path and change the name to fileUrl
     //multer gives us req.file
     //req.file.path가 존재하는것이기 때문에 받아서 해당 파일을 fileUrl로 return 해줌 
@@ -70,7 +71,8 @@ export const postUpload = async (req, res) => {
         const newVideo = await Video.create({
             title,
             description,
-            fileUrl,
+            fileUrl: video[0].path,
+            thumbUrl: thumb[0].destination + "/" + thumb[0].filename,
             owner: _id,
             //to distinguish the ownwer of the video for enabling edit, delete video feature for the user
             hashtags: Video.formatHashtags(hashtags)
