@@ -1,0 +1,78 @@
+.videoContainer {
+  width: 100%;
+  position: relative;
+}
+
+.videoContainer video {
+  width: 100%;
+}
+
+.videoContainer .videoControls {
+  opacity: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+  width: 95%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 4fr 1fr auto;
+      grid-template-columns: 1fr 4fr 1fr auto;
+  gap: 10px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #0f1117;
+  padding: 10px;
+  left: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.videoContainer .videoControls.showing {
+  opacity: 1;
+}
+
+.videoContainer .videoControls .playContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.videoContainer .videoControls .playContainer .playBtn {
+  margin: 0px 15px;
+}
+
+.videoContainer .videoControls .playContainer .time {
+  font-size: 12px;
+}
+
+.videoContainer .videoControls .volumeContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.videoContainer .videoControls .volumeContainer span {
+  margin-left: 10px;
+}
+
+.videoContainer .videoControls .volumeContainer span i {
+  font-size: 20px;
+}
+/*# sourceMappingURL=video-player.css.map */

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAA;EACT,UAAU,EAAE,GAAG,CAAC,KAAK,CAAC,wBAAqB;EAC3C,UAAU,EAAE,IAAI;EAChB,WAAW,EAAE,IAAI;CAKpB;;AARD,AAII,aAJS,CAIT,oBAAoB,CAAA;EACjB,gBAAgB,EAAE,WAAW;EAC7B,KAAK,EAAE,KAAK;CACd",
+    "sources": [
+        "social-login.scss"
+    ],
+    "names": [],
+    "file": "social-login.css"
+}

@@ -1,0 +1,28 @@
+.empty__message {
+  margin-bottom: 50px;
+  font-size: 19px;
+}
+
+.video-grid {
+  display: -ms-grid;
+  display: grid;
+  gap: 50px;
+  -ms-grid-columns: (minmax(0, 1fr))[4];
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-switch a {
+  text-decoration: underline;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+}
+/*# sourceMappingURL=shared.css.map */
