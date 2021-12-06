@@ -8,8 +8,6 @@ entry: {
   recorder:'./src/client/js/recorder.js',
   commentSection: './src/client/js/commentSection.js'
 },
-  mode:'development',
-  watch: true,
 //variable 바꾸면 알아서 적용됨
   plugins: [
     new MiniCssExtractPlugin({
@@ -35,6 +33,7 @@ entry: {
               presets: [
                 ['@babel/preset-env', { targets: "defaults" }]
               ],
+
             },
           },
         },
