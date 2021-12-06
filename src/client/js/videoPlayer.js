@@ -19,6 +19,8 @@ const screenContainer = document.querySelector('.screenContainer')
 const fullScreenBtn = document.querySelector(".fullScreenBtn")
 const fullScreenBtnIcon = fullScreenBtn.querySelector('i')
 
+const textarea = document.querySelector('textarea')
+
 let mouseLeaveTimeout = null;
 let insideMoveTimeout = null;
 let volumeValue = 0.5
@@ -114,7 +116,7 @@ const handleMouseLeave = () => {
 }
 
 const handleSpacebar = (e) => {
-    if(e.keyCode == 32){
+    if((e.target!==textarea) && e.keyCode == 32){
         handlePlayClick()
     }
 }
