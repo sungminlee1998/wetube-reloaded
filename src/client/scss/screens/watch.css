@@ -1,0 +1,52 @@
+.videoData {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+
+.videoData .videoTitle {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.videoData .videoCreatedAt {
+  font-size: 12px;
+}
+
+.videoData .videoOwner {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.videoData .videoOwner a {
+  color: cornflowerblue;
+  text-decoration: underline;
+}
+
+.videoComments {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.videoComments .videoComment {
+  padding: 10px;
+  margin-bottom: 10px;
+  background: white;
+  color: black;
+  border-radius: 999px;
+}
+/*# sourceMappingURL=watch.css.map */
