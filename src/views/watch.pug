@@ -19,6 +19,31 @@ block content
             div.screenContainer  
                 span.fullScreenBtn 
                     i.fas.fa-expand
+    div.videoData  
+        p.videoTitle=video.title
+        small.videoOwner Upl oaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name
+        small.videoCreatedAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        if String(video.owner.id) === String(loggedInUser._id)
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr;
+    if loggedIn 
+        div.videoAddComments 
+            form.videoCommentForm
+                textarea(cols="30", rows="10", placeholder="Write a comment...")
+                button Add Comment  
+    div.videoComments
+        ul
+            each comment in video.comments.reverse()
+                li.videoComment(data-id=comment.id)
+                    i.fas.fa-comment     
+                    span=comment.text 
+                    if String(comment.owner._id) === String(loggedInUser._id)
+                        span.commentDeleteBtn   ❌
+
 block scripts 
     script(src="/static/js/videoPlayer.js") 
+    if loggedIn 
+        script(src="/static/js/commentSection.js") 
     
