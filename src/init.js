@@ -1,6 +1,6 @@
-import "./db"
 import "regenerator-runtime"
 import 'dotenv/config'
+import "./db"
 //.env file 읽고 데이타 가져올 수 있게 해줌 
 import "./models/Video";
 import "./models/User";
