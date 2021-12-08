@@ -11,6 +11,10 @@
     "dev:server": "nodemon",
     "dev:assets": "webpack --mode=development -w"
   },
+  "engines": { 
+    "node": "16.13.0",
+    "npm": "8.1.0"
+   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sungminlee0826/myyoutube.git"
