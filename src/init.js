@@ -10,5 +10,5 @@ const PORT = process.env.PORT || 5000;
 
 const handleListening = () => console.log(`✅Server Listening on port ${PORT}🚀`)
 
-app.listen(5000, handleListening)
+app.listen(PORT, handleListening)
  
