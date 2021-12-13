@@ -1,6 +1,4 @@
-import { set } from "mongoose";
 import { async } from "regenerator-runtime";
-
 
 const form = document.querySelector('.videoCommentForm');
 const videoContainer = document.querySelector('.videoContainer');
